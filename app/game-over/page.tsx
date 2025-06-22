@@ -1,10 +1,20 @@
 'use client';
+import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function GameOverPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const score = searchParams.get('score') || '0';
+
+  // ⏯️ Play sound on mount
+  useEffect(() => {
+    const gameOverSound = new Audio('/sounds/game-over.wav');
+    gameOverSound.volume = 0.8;
+    gameOverSound.play().catch((e) =>
+      console.warn('Autoplay blocked:', e)
+    );
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-purple-100 text-center px-4">
