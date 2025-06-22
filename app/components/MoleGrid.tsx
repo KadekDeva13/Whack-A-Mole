@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 type MoleGridProps = {
   onGameOver: (score: number) => void;
-  bgMusic?: HTMLAudioElement | null; // menerima musik dari parent
+  bgMusic?: HTMLAudioElement | null;
 };
 
 export default function MoleGrid({ onGameOver, bgMusic }: MoleGridProps) {
@@ -34,19 +34,18 @@ export default function MoleGrid({ onGameOver, bgMusic }: MoleGridProps) {
       }
       onGameOver(score);
     }
-  }, [timeLeft]);
+  }, [timeLeft, bgMusic, onGameOver, score]);
 
   const handleClick = (index: number) => {
     if (index === moleIndex) {
       setScore((prev) => prev + 1);
       setMoleIndex(null);
-      new Audio('/sounds/pop.mp3').play(); // langsung trigger suara baru tanpa delay
+      new Audio('/sounds/pop.mp3').play();
     }
   };
 
   return (
     <div className="flex flex-col items-center w-full">
-      {/* Progress Bar */}
       <div className="w-full max-w-xs sm:max-w-md bg-gray-300 h-3 sm:h-4 rounded-full mb-4 overflow-hidden">
         <div
           className="bg-green-500 h-full transition-all duration-1000"
@@ -54,7 +53,6 @@ export default function MoleGrid({ onGameOver, bgMusic }: MoleGridProps) {
         />
       </div>
 
-      {/* Time and Score */}
       <div className="flex flex-col items-center mb-4">
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900">
           Time Left: {timeLeft}s
@@ -64,7 +62,6 @@ export default function MoleGrid({ onGameOver, bgMusic }: MoleGridProps) {
         </h2>
       </div>
 
-      {/* Mole Grid */}
       <div className="grid grid-cols-3 gap-3">
         {[...Array(9)].map((_, i) => (
           <div

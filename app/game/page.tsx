@@ -1,6 +1,5 @@
 'use client';
-
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import MoleGrid from '../components/MoleGrid';
 
@@ -16,7 +15,7 @@ export default function GamePage() {
     music.play().then(() => {
       bgMusicRef.current = music;
     }).catch((e) => {
-      console.warn('Autoplay blocked, music will play on interaction.', e);
+      console.warn('Autoplay blocked, will play on interaction.', e);
     });
 
     return () => {
@@ -25,9 +24,9 @@ export default function GamePage() {
     };
   }, []);
 
-  const handleGameOver = (score: number) => {
+  const handleGameOver = useCallback((score: number) => {
     router.push(`/game-over?score=${score}`);
-  };
+  }, [router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-100 p-4">
